@@ -1,9 +1,30 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+export interface Sentiment {
+  id: string
+  classifications: {
+    id: string
+    input: string
+    prediction: Status
+    confidence: number
+    confidences: {
+      option: Status
+      confidence: number
+    }[]
+    labels: {
+      negative: number
+      neutral: number
+      positive: number
+    }
+  }[]
+}
+
+export type Status = 'negative' | 'positive' | 'neutral'
+
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<Sentiment>
 ) {
   await fetch('https://api.cohere.ai/classify', {
     method: 'POST',
@@ -57,7 +78,7 @@ export default async function handler(
       taskDescription: 'Clasifica estos comentarios como positivos, negativos o neutros en el idioma en el que están escritos'
     })
   }).then(async (response) => {
-    const data = await response.json()
+    const data: Sentiment = await response.json()
     res.status(200).json(data)
   }).catch(error => {
     console.log(error)

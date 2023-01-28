@@ -11,6 +11,10 @@ export const connect = async (username: string) => {
     }
 }
 
+export const onConnected = (callback: (address: string, port: number) => void) => {
+    comfy.onConnected = callback
+}
+
 export const onChat = (callback: (user: string, message: string, flags: any, self: boolean) => void) => {
     comfy.onChat = callback
 }

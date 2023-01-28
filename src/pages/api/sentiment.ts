@@ -24,8 +24,10 @@ export type Status = 'negative' | 'positive' | 'neutral'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Sentiment>
+  res: NextApiResponse
 ) {
+  if (req.method !== 'POST') res.status(405).json({ message: 'Method not allowed' })
+
   await fetch('https://api.cohere.ai/classify', {
     method: 'POST',
     headers: {

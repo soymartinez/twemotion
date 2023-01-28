@@ -1,9 +1,11 @@
 import comfy from 'comfy.js'
 
-export const connect = (username: string) => {
+export const connect = async (username: string) => {
     try {
-        comfy.Init(username)
-        console.log('Connected')
+        await new Promise<void>((resolve) => {
+            comfy.Init(username)
+            onConnected(() => resolve())
+        })
     } catch {
         console.log('Error connecting')
     }
@@ -13,10 +15,11 @@ export const onChat = (callback: (user: string, message: string, flags: any, sel
     comfy.onChat = callback
 }
 
-export const disconnect = () => {
+export const disconnect = async () => {
     try {
-        comfy.Disconnect()
-        console.log('Disconnected')
+        await new Promise<void>((resolve) => {
+            resolve(comfy.Disconnect())
+        }).then(() => console.log('Disconnected'))
     } catch {
         console.log('Error disconnecting')
     }

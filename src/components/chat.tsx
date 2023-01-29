@@ -1,5 +1,7 @@
 'use client'
 
+import { useInterval } from '@/hooks/useInterval'
+import { Sentiment } from '@/pages/api/sentiment'
 import { onChat } from '@/utils/twitch'
 import { useEffect, useState } from 'react'
 
@@ -11,6 +13,7 @@ interface ChatProps {
 export default function Chat() {
     const [chat, setChat] = useState<ChatProps[]>([])
     const [messages, setMessages] = useState<string[]>([])
+    const [predictions, setPredictions] = useState<Sentiment | null>(null)
 
     onChat((user, message) => {
         setChat((prev) => {
@@ -19,10 +22,34 @@ export default function Chat() {
         })
 
         setMessages((prev) => {
-            if (prev.length === 10) prev.shift()
+            if (prev.length === 5) prev.shift()
             return [...prev, message]
         })
     })
+
+    const sendMessages = async () => {
+        let prompt = ''
+        messages.forEach((message) => {
+            prompt += message + ', '
+        })
+
+        const response = await fetch('/api/sentiment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(prompt),
+        })
+
+        const predictions: Sentiment = await response.json()
+        if (!predictions.classifications) return
+
+        setPredictions(predictions)
+    }
+
+    useInterval(() => {
+        if (messages.length > 0) sendMessages()
+    }, 1000)
 
     useEffect(() => {
         const container = document.getElementById('container')
@@ -38,6 +65,11 @@ export default function Chat() {
                         {message.message}
                     </div>
                 ))}
+            </div>
+            <div className='flex justify-center p-8'>
+                {predictions
+                    ? <p className='text-4xl font-black'>{predictions.classifications[0].prediction}</p>
+                    : <p>Waiting for messages...</p>}
             </div>
         </section>
     )

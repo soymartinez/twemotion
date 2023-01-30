@@ -42,9 +42,10 @@ export default function Chat() {
         })
 
         const predictions: Sentiment = await response.json()
-        if (!predictions.classifications) return
 
-        setPredictions(predictions)
+        if (predictions.classifications) {
+            setPredictions(predictions)
+        }
     }
 
     useInterval(() => {

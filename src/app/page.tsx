@@ -7,7 +7,6 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   return (
     <main>
-      <h1>twemotion</h1>
       <Live />
     </main>
   )

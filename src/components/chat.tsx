@@ -43,6 +43,8 @@ export default function Chat() {
 
         const predictions: Sentiment = await response.json()
 
+        console.log(predictions)
+
         if (predictions.classifications) {
             setPredictions(predictions)
         }

@@ -60,8 +60,8 @@ export default function Chat() {
         <section className='flex flex-col grow'>
             <div id='container' className='h-0 flex flex-col grow overflow-hidden overflow-y-auto'>
                 {chat.map((message, index) => (
-                    <div className='px-[10px]'>
-                        <div key={index} className='text-sm px-[10px] py-[5px] rounded hover:bg-[#3d3d40]'>
+                    <div key={index} className='px-[10px]'>
+                        <div className='text-sm px-[10px] py-[5px] rounded hover:bg-[#3d3d40]'>
                             <span className='font-bold'>{message.user}</span>: <span>{message.message}</span>
                         </div>
                     </div>

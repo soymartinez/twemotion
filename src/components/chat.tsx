@@ -57,20 +57,20 @@ export default function Chat() {
         if (container) container.scrollTop = container.scrollHeight
     }, [messages])
     return (
-        <section>
-            <h1>Chat</h1>
-            <div id='container' className='h-56 border overflow-y-auto'>
+        <section className='flex flex-col grow'>
+            <div id='container' className='h-0 flex flex-col grow overflow-hidden overflow-y-auto'>
                 {chat.map((message, index) => (
-                    <div key={index} className='flex gap-2'>
-                        <p className='font-bold'>{message.user}</p>
-                        {message.message}
+                    <div className='px-[10px]'>
+                        <div key={index} className='text-sm px-[10px] py-[5px] rounded hover:bg-[#3d3d40]'>
+                            <span className='font-bold'>{message.user}</span>: <span>{message.message}</span>
+                        </div>
                     </div>
                 ))}
             </div>
             <div className='flex justify-center p-8'>
                 {predictions
                     ? <p className='text-4xl font-black'>{predictions.classifications[0].prediction}</p>
-                    : <p>Waiting for messages...</p>}
+                    : <p>Waiting for emotions...</p>}
             </div>
         </section>
     )

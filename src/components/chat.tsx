@@ -18,7 +18,10 @@ export default function Chat() {
 
     onChat((user, message) => {
         setChat((prev) => {
-            if (prev.length === 100) prev.shift()
+            const { scrollHeight, scrollTop, offsetHeight } = container.current as HTMLDivElement
+            const scrollBottom = scrollTop + offsetHeight >= scrollHeight
+
+            if (scrollBottom && prev.length > 100) prev.shift()
             return [...prev, { user, message }]
         })
 

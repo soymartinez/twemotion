@@ -3,7 +3,7 @@
 import { useInterval } from '@/hooks/useInterval'
 import { Sentiment } from '@/pages/api/sentiment'
 import { onChat } from '@/utils/twitch'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 interface ChatProps {
     user: string
@@ -14,6 +14,7 @@ export default function Chat() {
     const [chat, setChat] = useState<ChatProps[]>([])
     const [messages, setMessages] = useState<string[]>([])
     const [predictions, setPredictions] = useState<Sentiment | null>(null)
+    const container = useRef<HTMLDivElement>(null)
 
     onChat((user, message) => {
         setChat((prev) => {
@@ -48,17 +49,23 @@ export default function Chat() {
         }
     }
 
+    const autoScroll = () => {
+        const { offsetHeight, scrollHeight, scrollTop } = container.current as HTMLDivElement
+        if (scrollHeight <= scrollTop + offsetHeight + 100) {
+            container.current?.scrollTo(0, scrollHeight)
+        }
+    }
+
     useInterval(() => {
         if (messages.length > 0) sendMessages()
     }, 1000)
 
     useEffect(() => {
-        const container = document.getElementById('container')
-        if (container) container.scrollTop = container.scrollHeight
+        autoScroll()
     }, [messages])
     return (
         <section className='flex flex-col grow'>
-            <div id='container' className='h-0 flex flex-col grow overflow-hidden overflow-y-auto'>
+            <div ref={container} className='h-0 flex flex-col grow overflow-hidden overflow-y-auto'>
                 {chat.map((message, index) => (
                     <div key={index} className='px-[10px]'>
                         <div className='text-sm px-[10px] py-[5px] rounded hover:bg-[#3d3d40]'>

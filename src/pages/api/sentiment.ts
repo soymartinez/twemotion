@@ -45,7 +45,8 @@ export default async function handler(
         { text: 'I’m feeling cheerful: Me siento alegre.', label: 'happy' },
         { text: 'I’m feeling delighted: Me siento encantado.', label: 'happy' },
         { text: 'I’m feeling overjoyed: Me siento muy contento.', label: 'happy' },
-        { text: '😀, 😃, 🙂, 😊, 😀', label: 'happy' },
+        { text: ':)', label: 'happy' },
+        { text: '😀, 😃, 🙂, 😊, 😊, 😄', label: 'happy' },
 
         { text: 'I’m really bummed out!: ¡Estoy muy molesto!.', label: 'sad' },
         { text: 'I’m feeling miserable: Me siento muy triste.', label: 'sad' },
@@ -64,13 +65,14 @@ export default async function handler(
 
         { text: 'I’m feeling neutral: Me siento neutral.', label: 'neutral' },
         { text: 'I’m feeling okay: Me siento bien.', label: 'neutral' },
+        { text: 'ok, okay, alright, fine', label: 'neutral' },
         { text: '👌, 😐, 😑, 😶', label: 'neutral' },
 
         { text: 'I’m feeling surprised: Me siento sorprendido.', label: 'surprised' },
         { text: 'I’m feeling shocked: Me siento asombrado.', label: 'surprised' },
         { text: 'I’m feeling astonished: Me siento asombrado.', label: 'surprised' },
         { text: 'I’m feeling amazed: Me siento asombrado.', label: 'surprised' },
-        { text: 'WOW!: ¡Vaya!', label: 'excited' },
+        { text: 'WOW!: ¡Vaya!, LOL, OMG', label: 'excited' },
         { text: '😮, 😲, 😳, 😵, 😱', label: 'surprised' },
 
         { text: 'I’m feeling fearful: Me siento asustado.', label: 'fearful' },
@@ -99,6 +101,7 @@ export default async function handler(
         { text: 'What’s up?: ¿Qué pasa?', label: 'confused' },
         { text: 'What’s going on?: ¿Qué está pasando?', label: 'confused' },
         { text: 'What’s new?: ¿Qué hay de nuevo?', label: 'confused' },
+        { text: 'idk: no sé', label: 'confused' },
         { text: '😕, 😵, 🤔', label: 'confused' },
 
         { text: 'I’m feeling bored: Me siento aburrido.', label: 'bored' },
@@ -109,11 +112,13 @@ export default async function handler(
         { text: 'I’m feeling excited: Me siento emocionado.', label: 'excited' },
         { text: 'I’m feeling ecstatic: Me siento eufórico.', label: 'excited' },
         { text: 'I’m feeling thrilled: Me siento emocionado.', label: 'excited' },
+        { text: 'KEKW, XD, LOL, LMAO, ROFL, LULW, OMEGALUL', label: 'excited' },
         { text: '🤣, 😁, 😄, 😆, 😎', label: 'excited' },
 
         { text: 'I’m feeling loved: Me siento amado.', label: 'loved' },
         { text: 'I’m feeling cherished: Me siento querido.', label: 'loved' },
         { text: 'I’m feeling adored: Me siento adorado.', label: 'loved' },
+        { text: 'XOXO, <3, ❤️, 💕, 💖, 💗, 💘, 💙, 💚, 💛, 💜, 💝, 💞, 💟', label: 'loved' },
         { text: '😍, 😘, 😚, 😗, 😙, 😚', label: 'loved' },
 
         { text: 'I’m feeling frustrated: Me siento frustrado.', label: 'frustrated' },

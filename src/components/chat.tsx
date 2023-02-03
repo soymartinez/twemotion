@@ -2,13 +2,9 @@
 
 import { useInterval } from '@/hooks/useInterval'
 import { Sentiment } from '@/pages/api/sentiment'
+import { ChatProps } from '@/types/tmi'
 import { onChat } from '@/utils/twitch'
 import { useEffect, useState, useRef } from 'react'
-
-interface ChatProps {
-    user: string
-    message: string
-}
 
 export default function Chat() {
     const [chat, setChat] = useState<ChatProps[]>([])
@@ -69,10 +65,10 @@ export default function Chat() {
     return (
         <section className='flex flex-col grow'>
             <div ref={container} className='h-0 flex flex-col grow overflow-hidden overflow-y-auto'>
-                {chat.map((message, index) => (
+                {chat.map(({ userstate, message }, index) => (
                     <div key={index} className='px-[10px]'>
                         <div className='text-sm px-[10px] py-[5px] rounded hover:bg-[#3d3d40]'>
-                            <span className='font-bold'>{message.user}</span>: <span>{message.message}</span>
+                            <span className='font-bold' style={{ color: userstate.color }} >{userstate.username}</span>: <span>{message}</span>
                         </div>
                     </div>
                 ))}

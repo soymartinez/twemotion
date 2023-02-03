@@ -3,7 +3,7 @@
 import { useInterval } from '@/hooks/useInterval'
 import { Sentiment } from '@/pages/api/sentiment'
 import { ChatProps } from '@/types/tmi'
-import { onChat } from '@/utils/twitch'
+import { onChat, removeListeners } from '@/utils/twitch'
 import { useEffect, useState, useRef } from 'react'
 
 export default function Chat() {
@@ -11,21 +11,6 @@ export default function Chat() {
     const [messages, setMessages] = useState<string[]>([])
     const [predictions, setPredictions] = useState<Sentiment | null>(null)
     const container = useRef<HTMLDivElement>(null)
-
-    onChat((user, message) => {
-        setChat((prev) => {
-            const { scrollHeight, scrollTop, offsetHeight } = container.current as HTMLDivElement
-            const scrollBottom = scrollTop + offsetHeight >= scrollHeight
-
-            if (scrollBottom && prev.length > 100) prev.shift()
-            return [...prev, { user, message }]
-        })
-
-        setMessages((prev) => {
-            if (prev.length === 5) prev.shift()
-            return [...prev, message]
-        })
-    })
 
     const sendMessages = async () => {
         let prompt = ''
@@ -58,6 +43,25 @@ export default function Chat() {
     useInterval(() => {
         if (messages.length > 0) sendMessages()
     }, 1000)
+
+    useEffect(() => {
+        onChat((props) => {
+            setChat((prev) => {
+                const { scrollHeight, scrollTop, offsetHeight } = container.current as HTMLDivElement
+                const scrollBottom = scrollTop + offsetHeight >= scrollHeight
+
+                if (scrollBottom && prev.length > 100) prev.shift()
+                return [...prev, props]
+            })
+
+            setMessages((prev) => {
+                if (prev.length === 5) prev.shift()
+                return [...prev, props.message]
+            })
+        })
+
+        return () => removeListeners()
+    }, [])
 
     useEffect(() => {
         autoScroll()

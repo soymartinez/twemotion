@@ -55,8 +55,8 @@ export default function Chat() {
 
             newMessage.split(' ').map((word, i) => {
                 if (word.startsWith(URL)) {
-                    html = [...html, <div className='inline-flex justify-center items-center align-middle -my-1'>
-                        <Image key={i} src={word} alt='emoticon' width={28} height={28} />
+                    html = [...html, <div key={i} className='inline-flex justify-center items-center align-middle -my-1'>
+                        <Image src={word} alt='emoticon' width={28} height={28} />
                     </div>]
                 } else {
                     html = [...html, <span key={i}>{word}</span>]

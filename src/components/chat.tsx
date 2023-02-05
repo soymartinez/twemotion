@@ -4,7 +4,8 @@ import { useInterval } from '@/hooks/useInterval'
 import { Sentiment } from '@/pages/api/sentiment'
 import { ChatProps } from '@/types/tmi'
 import { onChat, removeListeners } from '@/utils/twitch'
-import { useEffect, useState, useRef } from 'react'
+import Image from 'next/image'
+import { useEffect, useState, useRef, ReactNode } from 'react'
 
 export default function Chat() {
     const [chat, setChat] = useState<ChatProps[]>([])
@@ -40,18 +41,45 @@ export default function Chat() {
         }
     }
 
+    const emoticons = (message: string, emoticon: { [emoteid: string]: string[] } | undefined) => {
+        const URL = `https://static-cdn.jtvnw.net/emoticons/v2`
+        let newMessage: string = ''
+        let html: ReactNode[] = []
+        if (emoticon) {
+            Object.entries(emoticon).forEach(([id, positions]) => {
+                positions.map((index) => {
+                    const [start, end] = index.split('-')
+                    newMessage = message.replaceAll(message.substring(Number(start), Number(end) + 1), `${URL}/${id}/default/dark/1.0`)
+                })
+            })
+
+            newMessage.split(' ').map((word, i) => {
+                if (word.startsWith(URL)) {
+                    html = [...html, <div className='inline-flex justify-center items-center align-middle -my-1'>
+                        <Image key={i} src={word} alt='emoticon' width={28} height={28} />
+                    </div>]
+                } else {
+                    html = [...html, <span key={i}>{word}</span>]
+                }
+            })
+            return html
+        }
+        return [<span key={html.length}>{message}</span>]
+    }
+
     useInterval(() => {
         if (messages.length > 0) sendMessages()
     }, 1000)
 
     useEffect(() => {
         onChat((props) => {
+            const html = emoticons(props.message, props.userstate.emotes)
             setChat((prev) => {
                 const { scrollHeight, scrollTop, offsetHeight } = container.current as HTMLDivElement
                 const scrollBottom = scrollTop + offsetHeight >= scrollHeight
 
                 if (scrollBottom && prev.length > 100) prev.shift()
-                return [...prev, props]
+                return [...prev, { ...props, html }]
             })
 
             setMessages((prev) => {
@@ -69,10 +97,14 @@ export default function Chat() {
     return (
         <section className='flex flex-col grow'>
             <div ref={container} className='h-0 flex flex-col grow overflow-hidden overflow-y-auto'>
-                {chat.map(({ userstate, message }, index) => (
+                {chat.map(({ userstate, html }, index) => (
                     <div key={index} className='px-[10px]'>
                         <div className='text-sm px-[10px] py-[5px] rounded hover:bg-[#3d3d40]'>
-                            <span className='font-bold' style={{ color: userstate.color }} >{userstate.username}</span>: <span>{message}</span>
+                            <div className='inline-block font-bold' style={{ color: userstate.color }}>
+                                {userstate['display-name']}
+                            </div>
+                            <span>: </span>
+                            {html.map((html, i) => <span key={i}>{html}{' '}</span>)}
                         </div>
                     </div>
                 ))}

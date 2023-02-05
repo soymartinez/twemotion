@@ -104,7 +104,7 @@ export default function Chat() {
                                 {userstate['display-name']}
                             </div>
                             <span>: </span>
-                            {html.map((html, i) => <span key={i}>{html}{' '}</span>)}
+                            {html?.map((html, i) => <span key={i}>{html}{' '}</span>)}
                         </div>
                     </div>
                 ))}

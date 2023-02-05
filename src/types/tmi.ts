@@ -6,5 +6,5 @@ export interface ChatProps {
     userstate: ChatUserstate
     message: string
     self: boolean
-    html: ReactNode[]
+    html?: ReactNode[]
 }

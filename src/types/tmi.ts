@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { ChatUserstate } from 'tmi.js'
 
 export interface ChatProps {
@@ -5,4 +6,5 @@ export interface ChatProps {
     userstate: ChatUserstate
     message: string
     self: boolean
+    html: ReactNode[]
 }

@@ -1,4 +1,4 @@
-import './globals.css'
+import '@/styles/globals.css'
 
 export default function RootLayout({
   children,
@@ -12,7 +12,7 @@ export default function RootLayout({
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body className='max-w-lg mx-auto'>{children}</body>
+      <body>{children}</body>
     </html>
   )
 }

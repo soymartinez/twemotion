@@ -104,15 +104,15 @@ export default function Chat() {
                                 {userstate['display-name']}
                             </div>
                             <span>: </span>
-                            {html?.map((html, i) => <span key={i}>{html}{' '}</span>)}
+                            {html?.map((html, i) => <span key={i} className='text-white'>{html}{' '}</span>)}
                         </div>
                     </div>
                 ))}
             </div>
             <div className='flex justify-center p-8'>
                 {predictions
-                    ? <p className='text-4xl font-black'>{predictions.classifications[0].prediction}</p>
-                    : <p>Waiting for emotions...</p>}
+                    ? <p className='text-4xl font-black text-white'>{predictions.classifications[0].prediction}</p>
+                    : <p className='text-xl font-semibold text-white'>Waiting for emotions...</p>}
             </div>
         </section>
     )

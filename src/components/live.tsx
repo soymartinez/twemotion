@@ -23,7 +23,7 @@ export default function Live() {
         })
     }
     return (
-        <section className='flex flex-col h-screen'>
+        <section className='flex flex-col h-screen w-full max-w-md mx-auto'>
             <div className='px-[10px] py-3 border-b border-[#2a2a2d]'>
                 <form
                     className='flex gap-2 justify-center items-center'

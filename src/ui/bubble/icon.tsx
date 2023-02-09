@@ -52,7 +52,9 @@ export function useIconTransform({
             borderRadius.set(newBorderRadius)
         }
 
-        return planeX.onChange(transform)
+        transform(planeX.get())
+
+        return planeX.on('change', transform)
     }, [planeX, scale, x, xOffset])
 
     useMemo(() => {
@@ -68,7 +70,9 @@ export function useIconTransform({
             borderRadius.set(newBorderRadius)
         }
 
-        return planeY.onChange(transform)
+        transform(planeY.get())
+
+        return planeY.on('change', transform)
     }, [planeY, scale, y, yOffset])
 }
 

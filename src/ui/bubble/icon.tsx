@@ -36,7 +36,7 @@ export function useIconTransform({
         // Transform x and scale based on planeX
         const transform = (v: any) => {
             // Calculate the offset of the icon relative to its position on the screen
-            const screenOffset = v + xOffset + -10
+            const screenOffset = v + xOffset + 20
 
             // Save the xScale to also be used in the planeY useMemo below.
             xScale.current = mapScreenXToScale(screenOffset)
@@ -60,7 +60,7 @@ export function useIconTransform({
     useMemo(() => {
         // Transform y and scale based on planeY
         const transform = (v: any) => {
-            const screenOffset = v + yOffset + -10
+            const screenOffset = v + yOffset + 20
             yScale.current = mapScreenYToScale(screenOffset)
             const newScale = Math.min(xScale.current, yScale.current)
             scale.set(newScale)
@@ -91,11 +91,9 @@ const createScreenRange = (axis: 'width' | 'height') => [
     device[axis] - (icon.size + icon.margin) / 2 + 60
 ]
 // Try changing these values to see how scrolling affects the scale and position of the icons
-// const scaleRange = [0, 1, 1, 0]
 const scaleRange = [0, 1, 1, 0]
 const xRange = createScreenRange('width')
 const yRange = createScreenRange('height')
-// const mapScreenToXOffset = transform(xRange, [50, 0, 0, -50])
 const mapScreenToXOffset = transform(xRange, [50, 0, 0, -50])
 const mapScreenToYOffset = transform(yRange, [50, 0, 0, -50])
 const mapScreenXToScale = transform(xRange, scaleRange)

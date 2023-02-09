@@ -26,11 +26,8 @@ export default function BubblePage() {
         height: icon.size * rows,
     });
 
-    // We manually create x/y motion values for the draggable plane as it allows us to pass these to
-    // icon children, which can then listen to when they change and respond.
-    // -220 is an arbitrary position that centers an initial icon - this could be calculated
-    const x = useMotionValue(-225);
-    const y = useMotionValue(-225);
+    const x = useMotionValue((device.width - plane.width) / 2)
+    const y = useMotionValue((device.height - plane.height) / 2)
 
     return (
         <div className={`overflow-hidden bg-black rounded-[50px] relative`} ref={containRef} style={device}>

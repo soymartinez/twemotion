@@ -49,7 +49,7 @@ export default function BubblePage() {
 
                 onDragStart={() => setIsDragging(true)}
                 onDragEnd={() => setIsDragging(false)}
-                // whileTap={{ scale: 0.97 }}
+                // whileTap={{ scale: 0.97 }} // TODO: scale on drag in the x/y direction
                 style={{
                     // Likewise these draggable plane dimensions could be calculated, but 1000x1000 is arbitrary and big
 

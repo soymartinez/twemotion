@@ -13,7 +13,8 @@ export function useIconTransform({
     planeX,
     planeY,
     xOffset,
-    yOffset
+    yOffset,
+    borderRadius,
 }: {
     x: MotionValue<number>
     y: MotionValue<number>
@@ -22,6 +23,7 @@ export function useIconTransform({
     planeY: MotionValue<number>
     xOffset: number
     yOffset: number
+    borderRadius: MotionValue<number>
 }) {
     // Keep track of our calculated x and y scales - we'll
     // set scale to the smallest of the two
@@ -45,6 +47,9 @@ export function useIconTransform({
             // with latest values passed to it
             scale.set(newScale)
             x.set(mapScreenToXOffset(screenOffset))
+
+            const newBorderRadius = scale.get() < 1 ? (1 - newScale) * (160 - 16) + 16 : 16
+            borderRadius.set(newBorderRadius)
         }
 
         return planeX.onChange(transform)
@@ -58,6 +63,9 @@ export function useIconTransform({
             const newScale = Math.min(xScale.current, yScale.current)
             scale.set(newScale)
             y.set(mapScreenToYOffset(screenOffset))
+
+            const newBorderRadius = scale.get() < 1 ? (1 - newScale) * (160 - 16) + 16 : 16
+            borderRadius.set(newBorderRadius)
         }
 
         return planeY.onChange(transform)

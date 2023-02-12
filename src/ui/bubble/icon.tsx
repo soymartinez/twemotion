@@ -84,9 +84,7 @@ export function useIconTransform({
 // when it's 80px inside the screen.
 const createScreenRange = (axis: 'width' | 'height') => [
     -60,
-    // -60,
     80,
-    // 100,
     device[axis] - (icon.size + icon.margin) / 2 - 80,
     device[axis] - (icon.size + icon.margin) / 2 + 60
 ]

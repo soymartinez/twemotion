@@ -12,22 +12,19 @@ export function Item({ row, col, planeX, planeY }: { row: number, col: number, p
 
     // Calculate the origin x and y offsets of this icon based on 
     // its column and row position
-    const xOffset = col * (icon.size + icon.margin) + (row % 2) * ((icon.size + icon.margin) / 2);
-    const yOffset = row * icon.size;
+    const xOffset = (col * icon.width) + (col * icon.margin);
+    const yOffset = (row * icon.height) + (row * icon.margin);
 
     // Transform the icon's x, y and scale based on the position of the draggable plane
     useIconTransform({ x, y, scale, planeX, planeY, xOffset, yOffset, borderRadius })
     return (
         <motion.div
             style={{
-                position: 'absolute',
-                left: xOffset,
-                top: yOffset,
                 x,
                 y,
                 scale,
-                width: icon.size,
-                height: icon.size,
+                width: icon.width,
+                height: icon.height,
                 borderRadius,
                 // This will change the color of an icon every render. In production
                 // you'd want to save this as a ref or similar. But here it makes a nice
